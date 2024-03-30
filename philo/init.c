@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 17:30:50 by jewlee            #+#    #+#             */
-/*   Updated: 2024/03/30 18:30:32 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/03/30 20:02:34 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ int	init_philo(t_philo **philo, t_infos *infos)
 	while (++i < infos->num_of_philo)
 	{
 		(*philo)[i].num = i + 1;
+		(*philo)[i].left = i + 1;
+		if (i == (infos->num_of_philo) - 1)
+			(*philo)[i].right = 1;
+		else
+			(*philo)[i].right = i + 2;
+		(*philo)[i].info = infos;
+		(*philo)[i].num_of_eat = 0;
 	}
 	return (SUCCESS);
 }

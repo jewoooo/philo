@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 16:51:37 by jewlee            #+#    #+#             */
-/*   Updated: 2024/03/30 18:40:02 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/03/30 19:50:36 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,6 @@
 # include <sys/time.h>
 # include <pthread.h>
 
-typedef struct s_philo
-{
-	int			num;
-	int			left;
-	int			right;
-	pthread_t	thread;
-}	t_philo;
-
 typedef struct s_infos
 {
 	int		num_of_philo;
@@ -38,7 +30,20 @@ typedef struct s_infos
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		num_of_times_must_eat;
+	int		dead_flag;
 }	t_infos;
+
+typedef struct s_philo
+{
+	int			num;
+	int			left;
+	int			right;
+	int			num_of_eat;
+	long		last_time_of_eat;
+	
+	pthread_t	thread;
+	t_infos		*info;
+}	t_philo;
 
 int	atoi_for_philo(const char *s);
 
