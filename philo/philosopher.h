@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:50:40 by jewlee            #+#    #+#             */
-/*   Updated: 2024/04/28 23:27:27 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/04/29 01:09:12 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ typedef struct s_philo
 	pthread_t		th;
 	int				id;
 	int				start_time;
+	int				last_eating;
 	int				count_of_eating;
 	struct s_fork	*l_fork;
 	struct s_fork	*r_fork;
+	struct s_fork	*fork;
 }	t_philo;
 
 typedef struct s_fork
@@ -48,12 +50,15 @@ typedef struct	s_info
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat;
-	int				dead_flag;
+	int				died;
+	long			start_time;
 	struct s_fork	*fork;
 	struct s_philo	*philos;
 }	t_info;
 
 int	ft_atoi(char *s);
+
+int	free_all(t_info *info);
 
 int	valid_argv(char *s);
 int	valid_args(char **argv);

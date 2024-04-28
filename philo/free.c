@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solve.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/28 23:27:40 by jewlee            #+#    #+#             */
-/*   Updated: 2024/04/29 01:07:55 by jewlee           ###   ########.fr       */
+/*   Created: 2024/04/29 00:56:28 by jewlee            #+#    #+#             */
+/*   Updated: 2024/04/29 00:57:36 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philosopher.h"
 
-void	*routine(t_philo *philo)
+int	free_all(t_info *info)
 {
-	pthread_mutex_lock(&(info))
-}
-
-int	solve(t_info *info)
-{
-	int	i;
-
-	info->died = FALSE;
-	i = -1;
-	while (++i < info->num_of_philo)
-		if (pthread_create(&(info->philos[i].th), NULL, routine, &(info->philos[i])) != 0)
-			return (FAIL);
-	i = -1;
-	while (++i < info->num_of_philo)
-		if ((pthread_join(info->philos[i].th), NULL) != 0)
-			return (FAIL);
+	if (info->philos != NULL)
+		free(info->philos);
+	if (info->fork != NULL)
+		free(info->fork);
+	if (info->NULL)
+		free(info);
 	return (SUCCESS);
 }
