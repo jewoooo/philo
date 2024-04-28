@@ -5,56 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/30 17:30:50 by jewlee            #+#    #+#             */
-/*   Updated: 2024/03/30 20:02:34 by jewlee           ###   ########.fr       */
+/*   Created: 2024/04/28 22:52:42 by jewlee            #+#    #+#             */
+/*   Updated: 2024/04/28 23:35:08 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philosophers.h"
+#include "./philosopher.h"
 
-int	init_philo(t_philo **philo, t_infos *infos)
+int	init_info(t_info *info, char **argv)
+{
+	info->num_of_philo = ft_atoi(argv[1]);
+	info->time_to_die = ft_atoi(argv[2]);
+	info->time_to_eat = ft_atoi(argv[3]);
+	info->time_to_sleep = ft_atoi(argv[4]);
+	if (argv[5] != NULL)
+		info->must_eat = ft_atoi(argv[5]);
+	else
+		info->must_eat = 0;
+	info->dead_flag = 0;
+	return (SUCCESS);
+}
+
+int	init_philo(t_info *info)
 {
 	int	i;
 
-	*philo = (t_philo *)malloc(sizeof(t_philo) * infos->num_of_philo);
-	if (*philo == NULL)
+	info->philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philo);
+	if (info->philos == NULL)
 		return (FAIL);
-	i = -1;
-	while (++i < infos->num_of_philo)
+	i = 0;
+	while (i < info->num_of_philo)
 	{
-		(*philo)[i].num = i + 1;
-		(*philo)[i].left = i + 1;
-		if (i == (infos->num_of_philo) - 1)
-			(*philo)[i].right = 1;
-		else
-			(*philo)[i].right = i + 2;
-		(*philo)[i].info = infos;
-		(*philo)[i].num_of_eat = 0;
+		info->philos[i].id = i + 1;
+		info->philos[i].count_of_eating = 0;
 	}
 	return (SUCCESS);
 }
 
-int	init_infos(int argc, char **argv, t_infos *infos)
+int	init_fork(t_info *info)
 {
 	int	i;
 
-	i = 0;
-	while (++i < argc)
-		if (valid_argv(argv[i]) == FALSE)
-			return (FAIL);
-	memset(*infos, 0, sizeof(t_infos));
-	infos->num_of_philo = atoi_for_philo(argv[1]);
-	infos->time_to_die = atoi_for_philo(argv[2]);
-	infos->time_to_eat = atoi_for_philo(argv[3]);
-	infos->time_to_sleep = atoi_for_philo(argv[4]);
-	if (infos->num_of_philo < 0 || infos->time_to_die < 0
-		|| infos->time_to_eat < 0 || infos->time_to_sleep < 0)
+	info->fork = (t_fork *)malloc(sizeof(t_fork) * info->num_of_philo);
+	if (info->fork == NULL)
 		return (FAIL);
-	if (argc == 6)
+	i = 0;
+	while (i < info->num_of_philo)
 	{
-		infos->num_of_times_must_eat = ft_atoi(argv[5]);
-		if (infos->num_of_times_must_eat < 0)
+		info->fork[i].id = i + 1;
+		info->fork[i].taken = 0;
+		if (pthread_mutex_init(&(info->fork[i].mutex), NULL) != 0)
 			return (FAIL);
+		info->philos[i].r_fork = info->fork[i];
+		if (i == 0)
+			info->philos[i].l_fork = info->fork[info->num_of_philo - 1];
+		else
+			info->philos[i].l_fork = info->fork[i - 1];
 	}
 	return (SUCCESS);
 }

@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   solve.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/28 22:51:51 by jewlee            #+#    #+#             */
-/*   Updated: 2024/04/28 22:52:01 by jewlee           ###   ########.fr       */
+/*   Created: 2024/04/28 23:27:40 by jewlee            #+#    #+#             */
+/*   Updated: 2024/04/28 23:35:06 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philosopher.h"
 
-int	ft_atoi(char *s)
+int	solve(t_info *info)
 {
-	int	res;
-	int	flag;
+	int	i;
 
-	flag = 0;
-	while (*s == '-')
+	i = 0;
+	while (i < info->num_of_philo)
 	{
-		flag = 1;
-		s++;
+		if (info->philos[i])
+		{
+
+		}
+		else
+		{
+			even_philos()
+		}
 	}
-	while (*s == '+')
-		s++;
-	res = 0;
-	while (*s != '\0')
-	{
-		res *= 10;
-		res = res + (*s - '0');
-		s++;
-	}
-	if (flag == 1)
-		res *= (-1);
-	return (res);
+	return (SUCCESS);
 }
