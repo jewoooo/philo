@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:50:40 by jewlee            #+#    #+#             */
-/*   Updated: 2024/04/29 09:49:16 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/04/29 11:01:55 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ typedef struct	s_info
 	int				time_to_sleep;
 	int				must_eat;
 	int				died;
-	long			start_time;
+	int				start_time;
+	pthread_mutex_t	print_mutex;
 	struct s_fork	*fork;
 	struct s_philo	*philos;
 }	t_info;
