@@ -6,11 +6,11 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:51:51 by jewlee            #+#    #+#             */
-/*   Updated: 2024/04/29 00:58:01 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:25:06 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philosopher.h"
+#include "../include/philosopher.h"
 
 int	ft_atoi(char *s)
 {

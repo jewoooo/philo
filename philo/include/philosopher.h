@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:50:40 by jewlee            #+#    #+#             */
-/*   Updated: 2024/04/29 01:09:12 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:49:16 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <pthread.h>
 # include <sys/time.h>
 
@@ -27,12 +28,12 @@ typedef struct s_philo
 {
 	pthread_t		th;
 	int				id;
-	int				start_time;
-	int				last_eating;
+	int				start_time; // for check time
+	int				last_eating; // for time to die
 	int				count_of_eating;
+	struct s_info	*info;
 	struct s_fork	*l_fork;
 	struct s_fork	*r_fork;
-	struct s_fork	*fork;
 }	t_philo;
 
 typedef struct s_fork
@@ -64,7 +65,7 @@ int	valid_argv(char *s);
 int	valid_args(char **argv);
 
 int	init_info(t_info *info, char **argv);
-int	init_philo(t_info *info);
-int	init_fork(t_info *info);
+int	init_philo(t_info *info, t_philo **philos);
+int	init_fork(t_info *info, t_philo **philos);
 
 #endif

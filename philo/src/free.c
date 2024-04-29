@@ -6,11 +6,11 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:56:28 by jewlee            #+#    #+#             */
-/*   Updated: 2024/04/29 00:57:36 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:25:10 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philosopher.h"
+#include "../include/philosopher.h"
 
 int	free_all(t_info *info)
 {

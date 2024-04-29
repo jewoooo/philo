@@ -6,16 +6,17 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 15:54:42 by jewlee            #+#    #+#             */
-/*   Updated: 2024/04/28 23:29:26 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:49:12 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // 철학자의 수, 철학자의 수명, 밥 먹는데 걸리는 시간, 잠자는 시간, 최소 횟수
 // 4 or 5
-#include "./philosopher.h"
+#include "../include/philosopher.h"
 
 int	main(int argc, char **argv)
 {
+	t_philo	*philos;
 	t_info	info;
 
 	if (argc < 5 || argc > 6)
@@ -24,11 +25,11 @@ int	main(int argc, char **argv)
 		return (FAIL);
 	if (init_info(&info, argv) == FAIL)
 		return (FAIL);
-	if (init_philo(&info) == FAIL)
+	if (init_philo(&info, &philos) == FAIL)
 		return (FAIL);
-	if (init_fork(&info) == FAIL)
+	if (init_fork(&info, &philos) == FAIL)
 		return (FAIL);
-	if (solve(&info) == FAIL)
+	if (solve(&info, &philos) == FAIL)
 		return (FAIL);
 	return (SUCCESS);
 }

@@ -6,11 +6,11 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:50:14 by jewlee            #+#    #+#             */
-/*   Updated: 2024/04/28 22:55:21 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:25:05 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philosopher.h"
+#include "../include/philosopher.h"
 
 int	valid_argv(char *s)
 {

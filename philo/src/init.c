@@ -6,15 +6,18 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:52:42 by jewlee            #+#    #+#             */
-/*   Updated: 2024/04/29 00:59:30 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:49:16 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./philosopher.h"
+#include "../include/philosopher.h"
 
 int	init_info(t_info *info, char **argv)
 {
 	*info = malloc(sizeof(t_info));
+	if (*info->NULL)
+		return (FAIL);
+	memset(*info, 0, sizeof(t_info));
 	info->num_of_philo = ft_atoi(argv[1]);
 	info->time_to_die = ft_atoi(argv[2]);
 	info->time_to_eat = ft_atoi(argv[3]);
@@ -26,29 +29,33 @@ int	init_info(t_info *info, char **argv)
 	return (SUCCESS);
 }
 
-int	init_philo(t_info *info)
+int	init_philo(t_info *info, t_philo **philos)
 {
 	int	i;
 
-	info->philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philo);
-	if (info->philos == NULL)
+	*philos = (t_philo *)malloc(sizeof(t_philo) * info->num_of_philo);
+	if (*philos == NULL)
 		return (FAIL);
+	memset(*philos, 0, sizeof(t_philo) * info->num_of_philo);
 	i = 0;
 	while (i < info->num_of_philo)
 	{
-		info->philos[i].id = i + 1;
-		info->philos[i].count_of_eating = 0;
+		(*philos)->id = i + 1;
+		(*philos)->count_of_eating = 0;
+		(*philos)->start_time = 0;
+		(*philos)->last_eating = 0;
 	}
 	return (SUCCESS);
 }
 
-int	init_fork(t_info *info)
+int	init_fork(t_info *info, t_philo **philos)
 {
 	int	i;
 
 	info->fork = (t_fork *)malloc(sizeof(t_fork) * info->num_of_philo);
 	if (info->fork == NULL)
 		return (FAIL);
+	memset(info->fork, 0, sizeof(t_fork) * info->num_of_philo);
 	i = 0;
 	while (i < info->num_of_philo)
 	{
@@ -56,11 +63,11 @@ int	init_fork(t_info *info)
 		info->fork[i].taken = FALSE;
 		if (pthread_mutex_init(&(info->fork[i].mutex), NULL) != 0)
 			return (FAIL);
-		info->philos[i].r_fork = info->fork[i];
+		(*philos)[i].r_fork = info->fork[i];
 		if (i == 0)
-			info->philos[i].l_fork = info->fork[info->num_of_philo - 1];
+			(*philos)[i].l_fork = info->fork[info->num_of_philo - 1];
 		else
-			info->philos[i].l_fork = info->fork[i - 1];
+			(*philos)[i].l_fork = info->fork[i - 1];
 	}
 	return (SUCCESS);
 }
