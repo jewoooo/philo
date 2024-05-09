@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:18:25 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 14:58:36 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/09 23:34:32 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		er_print(char *s);
 int		er_free_info(t_info **info);
 int		er_free_all(t_info **info, t_philo **philos, t_fork **forks);
 void	free_all(t_info **info, t_philo **philos, t_fork **forks);
-void	destroy_mutex(t_info *info, t_philo *philos);
+void	destroy_mutex(t_info *info);
 
 int		create_thread(t_info **info, t_philo **philos);
 int		join_thread(t_info **info, t_philo **philos);
@@ -80,8 +80,9 @@ int		eating(t_philo *philo);
 int		sleeping(t_philo *philo);
 int		thinking(t_philo *philo);
 
-int		philo_sleep(long start, t_philo *philo);
+int		philo_sleep(long start, long sleep_time, t_philo *philo);
 int		philo_print(char *s, t_philo *philo);
+void	reset_last_eat_time(t_philo *philo);
 
 int		check_died(t_philo *philo);
 int		check_dead(t_philo *philos);

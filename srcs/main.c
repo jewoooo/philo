@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 20:39:33 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 14:58:51 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/10 00:33:12 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,20 @@ int	main(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 		return (FAIL);
 	if (valid_argv(argc, argv) == FALSE)
-		return (er_print("Invalid arguments.\n"));
+		return (er_print("Invalid arguments."));
 	if (init_info(&info, argv) == FAIL)
-		return (er_print("Failed init_info.\n"));
+		return (er_print("Failed init_info."));
 	if (init_philos(&info, &philos) == FAIL)
-		return (er_print("Failed init_philos.\n"));
+		return (er_print("Failed init_philos."));
 	if (init_forks(&info, &philos) == FAIL)
-		return (er_print("Failed init_forks.\n"));
+		return (er_print("Failed init_forks."));
 	if (init_mutex(&info, &philos) == FAIL)
-		return (er_print("Failed init_mutex.\n"));
+		return (er_print("Failed init_mutex."));
 	if (create_thread(&info, &philos) == FAIL)
-		return (er_print("Failed create_thread.\n"));
+		return (er_print("Failed create_thread."));
 	if (join_thread(&info, &philos) == FAIL)
-		return (er_print("Failed join_thread.\n"));
-	destroy_mutex(info, philos);
+		return (er_print("Failed join_thread."));
+	destroy_mutex(info);
 	free_all(&info, &philos, &(info->forks));
 	return (SUCCESS);
 }

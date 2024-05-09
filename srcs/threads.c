@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 13:40:15 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 15:59:27 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/10 00:25:38 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,10 @@ int	create_thread(t_info **info, t_philo **philos)
 		(*philos)[i].last_eat_time = gettime();
 		if (pthread_create(&((*philos)[i].th), NULL,
 			&philo_routine, &((*philos)[i])) != 0)
-		{
-			destroy_mutex(*info, *philos);
 			return (er_free_all(info, philos, &((*info)->forks)));
-		}
 	}
 	if (pthread_create(&((*info)->monitor), NULL, &monitoring, *info) != 0)
-	{
-		destroy_mutex(*info, *philos);
 		return (er_free_all(info, philos, &((*info)->forks)));
-	}
 	return (SUCCESS);
 }
 
@@ -96,15 +90,9 @@ int	join_thread(t_info **info, t_philo **philos)
 	while (++i < (*info)->num_of_philos)
 	{
 		if (pthread_join((*philos)[i].th, NULL) != 0)
-		{
-			destroy_mutex(*info, *philos);
 			return (er_free_all(info, philos, &((*info)->forks)));
-		}
 	}
 	if (pthread_join((*info)->monitor, NULL) != 0)
-	{
-		destroy_mutex(*info, *philos);
 		return (er_free_all(info, philos, &((*info)->forks)));
-	}
 	return (SUCCESS);
 }

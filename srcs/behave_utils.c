@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:52:56 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 15:27:55 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/09 23:34:15 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,19 @@ int	philo_print(char *s, t_philo *philo)
 	return (SUCCESS);
 }
 
-int	philo_sleep(long start, t_philo *philo)
+int	philo_sleep(long start, long sleep_time, t_philo *philo)
 {
-	t_info	*info;
-
-	info = philo->info;
-	while (gettime() - start < info->time_to_sleep)
+	while (gettime() - start < sleep_time)
 	{
 		if (check_died(philo) == TRUE)
 			return (FAIL);
 	}
 	return (SUCCESS);
+}
+
+void	reset_last_eat_time(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->time_mutex));
+	philo->last_eat_time = gettime();
+	pthread_mutex_unlock(&(philo->time_mutex));	
 }

@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 14:15:03 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 15:51:08 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/10 00:26:53 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,22 @@ int	eating(t_philo *philo)
 	take_fork(philo, philo->left_fork);
 	if (info->num_of_philos == 1)
 	{
-		while (check_died(philo) == FALSE)
-		pthread_mutex_unlock(&(philo->left_fork->mutex));
+		while (check_died(philo) == FALSE);
+		put_fork(philo->left_fork);
 		return (FAIL);
 	}
 	take_fork(philo, philo->right_fork);
-	if (philo_print("is eating", philo) == FAIL)
+	if (philo_print("is eating", philo) == FAIL ||
+		philo_sleep(gettime(), info->time_to_eat, philo) == FAIL)
+	{
+		put_fork(philo->right_fork);
+		put_fork(philo->left_fork);
 		return (FAIL);
-	if (philo_sleep(gettime(), philo) == FAIL)
-		return (FAIL);
+	}
 	pthread_mutex_lock(&(philo->count_mutex));
 	philo->count_eating += 1;
 	pthread_mutex_unlock(&(philo->count_mutex));
-	pthread_mutex_lock(&(philo->time_mutex));
-	philo->last_eat_time = gettime();
-	pthread_mutex_unlock(&(philo->time_mutex));
+	reset_last_eat_time(philo);
 	put_fork(philo->right_fork);
 	put_fork(philo->left_fork);
 	return (SUCCESS);
@@ -60,7 +61,7 @@ int	sleeping(t_philo *philo)
 {
 	if (philo_print("is sleeping", philo) == FAIL)
 		return (FAIL);
-	if (philo_sleep(gettime(), philo) == FAIL)
+	if (philo_sleep(gettime(), philo->info->time_to_sleep, philo) == FAIL)
 		return (FAIL);
 	return (SUCCESS);
 }
