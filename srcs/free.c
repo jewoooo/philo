@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:34:16 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/07 16:19:46 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/09 13:11:09 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	destroy_mutex(t_info *info, t_philo *philos)
 	i = -1;
 	while (++i < info->num_of_philos)
 	{
-		pthread_mutex_destroy(&(philos[i].mutex));
+		pthread_mutex_destroy(&(philos[i].time_mutex));
+		pthread_mutex_destroy(&(philos[i].count_mutex));
 		pthread_mutex_destroy(&(forks[i].mutex));
 	}
-	pthread_mutex_destroy(&(info->mutex));
 	pthread_mutex_destroy(&(info->die_mutex));
 	pthread_mutex_destroy(&(info->print_mutex));
 }

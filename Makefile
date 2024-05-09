@@ -6,14 +6,13 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 12:43:39 by jewlee            #+#    #+#              #
-#    Updated: 2024/05/07 15:33:02 by jewlee           ###   ########.fr        #
+#    Updated: 2024/05/09 11:49:30 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-THFLAGS = -pthread
 RM = rm -f
 SRCS = ./srcs/main.c \
 	./srcs/init.c \
@@ -29,7 +28,7 @@ OBJS = $(SRCS:.c=.o)
 all : make_mandatory
 
 make_mandatory : $(OBJS)
-	$(CC) $(CFLAGS) $(THFLAGS) $(OBJS) -I$(INCLUDE) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -I$(INCLUDE) -o $(NAME)
 	@ touch make_mandatory
 
 %.o : %.c

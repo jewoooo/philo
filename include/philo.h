@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:18:25 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/07 14:48:32 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/09 12:55:03 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ typedef struct s_philo
 	int				id;
 	int				count_eating;
 	long			last_eat_time;
-	int				eating;
 	struct s_info	*info;
 	struct s_fork	*left_fork;
 	struct s_fork	*right_fork;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	time_mutex;
+	pthread_mutex_t	count_mutex;
 }	t_philo;
 
 typedef struct s_fork
@@ -53,10 +53,9 @@ typedef struct s_info
 	int				must_eat;
 	int				died;
 	long			launch_time;
+	t_fork			*forks;
 	t_philo			*philos;
 	pthread_t		monitoring;
-	t_fork			*forks;
-	pthread_mutex_t	mutex;
 	pthread_mutex_t	die_mutex;
 	pthread_mutex_t	print_mutex;
 }	t_info;
@@ -73,16 +72,17 @@ void	destroy_mutex(t_info *info, t_philo *philos);
 
 int		create_thread(t_info *info, t_philo *philos);
 
-void	eating(t_philo *philo);
-void	sleeping(t_philo *philo);
-void	thinking(t_philo *philo);
+int		eating(t_philo *philo);
+int		sleeping(t_philo *philo);
+int		thinking(t_philo *philo);
 
 int		check_died(t_philo *philo);
 int		check_dead(t_philo *philos);
-int		check_all_philos_need(t_philo *philos);
+int		check_all_philos_eating(t_philo *philos);
 
 long	gettime(void);
 int		ft_atoi(char *s);
 long	ft_atol(char *s);
+int		philo_print(char *s, t_philo *philo);
 
 #endif
