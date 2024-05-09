@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 14:15:03 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 12:13:34 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/09 15:51:08 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,24 @@ static void	put_fork(t_fork *fork)
 
 int	eating(t_philo *philo)
 {
-	long	start;
 	t_info	*info;
 
 	info = philo->info;
 	take_fork(philo, philo->left_fork);
 	if (info->num_of_philos == 1)
 	{
+		while (check_died(philo) == FALSE)
 		pthread_mutex_unlock(&(philo->left_fork->mutex));
 		return (FAIL);
 	}
 	take_fork(philo, philo->right_fork);
 	if (philo_print("is eating", philo) == FAIL)
 		return (FAIL);
+	if (philo_sleep(gettime(), philo) == FAIL)
+		return (FAIL);
 	pthread_mutex_lock(&(philo->count_mutex));
 	philo->count_eating += 1;
 	pthread_mutex_unlock(&(philo->count_mutex));
-	start = gettime();
-	while (gettime() - start < info->time_to_eat)
-	{
-		if (check_died(philo) == TRUE)
-			break ;
-	}
 	pthread_mutex_lock(&(philo->time_mutex));
 	philo->last_eat_time = gettime();
 	pthread_mutex_unlock(&(philo->time_mutex));
@@ -62,18 +58,10 @@ int	eating(t_philo *philo)
 
 int	sleeping(t_philo *philo)
 {
-	long	start;
-	t_info	*info;
-
-	info = philo->info;
 	if (philo_print("is sleeping", philo) == FAIL)
 		return (FAIL);
-	start = gettime();
-	while (gettime() - start < info->time_to_sleep)
-	{
-		if (check_died(philo) == TRUE)
-			break ;
-	}
+	if (philo_sleep(gettime(), philo) == FAIL)
+		return (FAIL);
 	return (SUCCESS);
 }
 

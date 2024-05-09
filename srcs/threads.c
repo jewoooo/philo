@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 13:40:15 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 12:17:23 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/09 15:59:27 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*philo_routine(void *args)
 
 	philo = (t_philo *)args;
 	info = philo->info;
-	if (philo->id % 2 == 1)
+	if (philo->id % 2 == 1 && info->num_of_philos != 1)
 		usleep(info->time_to_eat / 4 * 1000);
 	while (TRUE)
 	{
@@ -46,14 +46,15 @@ void	*monitoring(void *args)
 	t_philo	*philos;
 	t_info	*info;
 
-	philos = (t_philo *)args;
-	info = philos->info;
-	usleep(info->time_to_die / 2 * 1000);
+	info = (t_info *)args;
+	philos = info->philos;
+	if (info->num_of_philos != 1)
+		usleep(info->time_to_die / 2 * 1000);
 	while (TRUE)
 	{
-		if (check_dead(philos) == TRUE ||
-			(info->must_eat != -1 &&
-				check_all_philos_eating(philos) == TRUE))
+		if (check_dead(philos) == TRUE
+			|| (info->must_eat != -1
+				&& check_all_philos_eating(philos) == TRUE))
 		{
 			pthread_mutex_lock(&(info->die_mutex));
 			info->died = TRUE;
@@ -64,27 +65,46 @@ void	*monitoring(void *args)
 	return (NULL);
 }
 
-int	create_thread(t_info *info, t_philo *philos)
+int	create_thread(t_info **info, t_philo **philos)
 {
-	pthread_t	monitor;
-	int			i;
+	int	i;
 
 	i = -1;
-	while (++i < info->num_of_philos)
+	while (++i < (*info)->num_of_philos)
 	{
-		philos[i].last_eat_time = gettime();
-		if (pthread_create(&((philos[i]).th), NULL, &philo_routine,  &(philos[i])) != 0)
-			return (FAIL);
+		(*philos)[i].last_eat_time = gettime();
+		if (pthread_create(&((*philos)[i].th), NULL,
+			&philo_routine, &((*philos)[i])) != 0)
+		{
+			destroy_mutex(*info, *philos);
+			return (er_free_all(info, philos, &((*info)->forks)));
+		}
 	}
-	if (pthread_create(&monitor, NULL, &monitoring, philos) != 0)
-		return (FAIL);
+	if (pthread_create(&((*info)->monitor), NULL, &monitoring, *info) != 0)
+	{
+		destroy_mutex(*info, *philos);
+		return (er_free_all(info, philos, &((*info)->forks)));
+	}
+	return (SUCCESS);
+}
+
+int	join_thread(t_info **info, t_philo **philos)
+{
+	int	i;
+
 	i = -1;
-	while (++i < info->num_of_philos)
+	while (++i < (*info)->num_of_philos)
 	{
-		if (pthread_join(philos[i].th, NULL) != 0)
-			return (FAIL);
+		if (pthread_join((*philos)[i].th, NULL) != 0)
+		{
+			destroy_mutex(*info, *philos);
+			return (er_free_all(info, philos, &((*info)->forks)));
+		}
 	}
-	if (pthread_join(monitor, NULL) != 0)
-		return (FAIL);
+	if (pthread_join((*info)->monitor, NULL) != 0)
+	{
+		destroy_mutex(*info, *philos);
+		return (er_free_all(info, philos, &((*info)->forks)));
+	}
 	return (SUCCESS);
 }

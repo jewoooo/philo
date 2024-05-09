@@ -6,18 +6,56 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:34:16 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 13:11:09 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/09 14:38:59 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	free_all(t_philo **philos, t_fork **forks)
+int	er_free_info(t_info **info)
 {
-	if (*philos != NULL)
-		free(*philos);
+	free(*info);
+	*info = NULL;
+	return (FAIL);
+}
+
+int	er_free_all(t_info **info, t_philo **philos, t_fork **forks)
+{
 	if (*forks != NULL)
+	{
 		free(*forks);
+		*forks = NULL;
+	}
+	if (*philos != NULL)
+	{
+		free(*philos);
+		*philos = NULL;
+	}
+	if (*info != NULL)
+	{
+		free(*info);
+		*info = NULL;
+	}
+	return (FAIL);
+}
+
+void	free_all(t_info **info, t_philo **philos, t_fork **forks)
+{
+	if (*forks != NULL)
+	{
+		free(*forks);
+		*forks = NULL;
+	}
+	if (*philos != NULL)
+	{
+		free(*philos);
+		*philos = NULL;
+	}
+	if (*info != NULL)
+	{
+		free(*info);
+		*info = NULL;
+	}
 }
 
 void	destroy_mutex(t_info *info, t_philo *philos)

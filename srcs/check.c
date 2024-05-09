@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 03:50:44 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 11:58:09 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/09 15:52:50 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ int	check_died(t_philo *philo)
 	pthread_mutex_unlock(&(info->die_mutex));
 	return (FALSE);
 }
-
-/*
-Description : Check for philo's dead by time to die
-*/
 
 int	check_dead(t_philo *philos)
 {

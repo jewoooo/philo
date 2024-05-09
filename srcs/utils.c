@@ -6,24 +6,19 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 20:52:51 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 12:15:40 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/09 14:59:23 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	philo_print(char *s, t_philo *philo)
+long	gettime(void)
 {
-	t_info	*info;
+	struct timeval	tv;
 
-	info = philo->info;
-	if (check_died(philo) == TRUE)
+	if (gettimeofday(&tv, NULL) != 0)
 		return (FAIL);
-	pthread_mutex_lock(&(info->print_mutex));
-	printf("%ld %d %s\n", gettime() - info->launch_time
-		, philo->id, s);
-	pthread_mutex_unlock(&(info->print_mutex));
-	return (SUCCESS);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 int	ft_atoi(char *s)
@@ -38,6 +33,11 @@ int	ft_atoi(char *s)
 		res = (res * 10) + (*s - '0');
 		s++;
 	}
+	if (res > 2147483647)
+	{
+		er_print("Invalid int integer.\n");
+		return (-1);
+	}
 	return ((int)res);
 }
 
@@ -48,19 +48,21 @@ long	ft_atol(char *s)
 	while (*s < '0' || *s > '9')
 		s++;
 	res = 0;
-    while (*s >= '0' && *s <= '9')
+	while (*s >= '0' && *s <= '9')
 	{
-        res = (res * 10) + (*s - '0');
-        s++;
-    }
-    return ((long)res);
+		res = (res * 10) + (*s - '0');
+		s++;
+	}
+	if (res > 2147483647)
+	{
+		er_print("Invalid long integer.\n");
+		return (-1);
+	}
+	return ((long)res);
 }
 
-long	gettime(void)
+int	er_print(char *s)
 {
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL) != 0)
-		return (FAIL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	printf("%s\n", s);
+	return (FAIL);
 }
