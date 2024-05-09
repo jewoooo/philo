@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 20:52:51 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 18:30:53 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/10 01:08:17 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	ft_atoi(char *s)
 	res = 0;
 	while (*s >= '0' && *s <= '9')
 	{
+		if (res > 2147483647)
+		{
+			er_print("Invalid int integer.\n");
+			return (-1);
+		}
 		res = (res * 10) + (*s - '0');
 		s++;
-	}
-	if (res > 2147483647)
-	{
-		er_print("Invalid int integer.\n");
-		return (-1);
 	}
 	return ((int)res);
 }
@@ -50,13 +50,13 @@ long	ft_atol(char *s)
 	res = 0;
 	while (*s >= '0' && *s <= '9')
 	{
+		if (res > 2147483647)
+		{
+			er_print("Invalid long integer.\n");
+			return (-1);
+		}
 		res = (res * 10) + (*s - '0');
 		s++;
-	}
-	if (res > 2147483647)
-	{
-		er_print("Invalid long integer.\n");
-		return (-1);
 	}
 	return ((long)res);
 }
