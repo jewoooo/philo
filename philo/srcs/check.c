@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 03:50:44 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 17:02:33 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/10 12:57:43 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_dead(t_philo *philos)
 	while (++i < info->num_of_philos)
 	{
 		pthread_mutex_lock(&(philos[i].time_mutex));
-		if (gettime() - philos[i].last_eat_time > info->time_to_die)
+		if (gettime() - philos[i].last_eat_time >= info->time_to_die)
 		{
 			pthread_mutex_unlock(&(philos[i].time_mutex));
 			philo_print("died", &(philos[i]));

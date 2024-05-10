@@ -6,12 +6,12 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 20:39:33 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/10 00:52:05 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/10 12:56:59 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-`
+
 int	main(int argc, char **argv)
 {
 	t_info	*info;

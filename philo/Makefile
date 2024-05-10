@@ -6,14 +6,13 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 12:43:39 by jewlee            #+#    #+#              #
-#    Updated: 2024/05/10 00:49:53 by jewlee           ###   ########.fr        #
+#    Updated: 2024/05/10 13:15:38 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-LEAKSFLAGS = -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 SRCS = ./srcs/main.c \
 	./srcs/valid.c \
