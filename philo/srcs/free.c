@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:34:16 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/10 12:58:14 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/10 13:59:26 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,19 @@ void	free_all(t_info **info, t_philo **philos, t_fork **forks)
 
 void	destroy_mutex(t_info *info)
 {
+	int	i;
+	t_philo	*philos;
+	t_fork	*forks;
+
+	philos = info->philos;
+	forks = info->forks;
+	i = -1;
+	while (++i < info->num_of_philos)
+	{
+		pthread_mutex_destroy(&(philos[i].time_mutex));
+		pthread_mutex_destroy(&(philos[i].time_mutex));
+		pthread_mutex_destroy(&(forks[i].mutex));
+	}
 	pthread_mutex_destroy(&(info->die_mutex));
 	pthread_mutex_destroy(&(info->print_mutex));
 }

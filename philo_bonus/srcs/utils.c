@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/01 20:52:51 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/10 13:33:24 by jewlee           ###   ########.fr       */
+/*   Created: 2024/05/10 13:31:55 by jewlee            #+#    #+#             */
+/*   Updated: 2024/05/10 13:33:15 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../include/philo_bonus.h"
 
 int	valid_argv(int argc, char **argv)
 {

@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 20:39:33 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/10 12:56:59 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/10 13:59:34 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 	t_philo	*philos;
 
 	if (argc < 5 || argc > 6)
-		return (FAIL);
+		return (er_print("Invalid arguments."));
 	if (valid_argv(argc, argv) == FALSE)
 		return (er_print("Invalid arguments."));
 	if (init_info(&info, argv) == FAIL)

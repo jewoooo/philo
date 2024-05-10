@@ -6,7 +6,7 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 12:43:39 by jewlee            #+#    #+#              #
-#    Updated: 2024/05/10 13:15:38 by jewlee           ###   ########.fr        #
+#    Updated: 2024/05/10 13:33:34 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,6 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 SRCS = ./srcs/main.c \
-	./srcs/valid.c \
 	./srcs/init.c \
 	./srcs/check.c \
 	./srcs/free.c \
