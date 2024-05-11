@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/10 12:58:28 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/10 13:37:38 by jewlee           ###   ########.fr       */
+/*   Created: 2024/05/11 21:42:09 by jewlee            #+#    #+#             */
+/*   Updated: 2024/05/11 23:50:23 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,51 @@
 # define PHILO_BONUS_H
 
 # include <stdio.h>
-# include <stdlib.h>
 # include <unistd.h>
+# include <signal.h>
 # include <pthread.h>
 # include <semaphore.h>
+# include <sys/time.h>
 
 # define SUCCESS 0
 # define FAIL 1
 # define TRUE 1
 # define FALSE 0
-
-typedef struct	s_info
+typedef struct s_philo
 {
-	int		num_of_philo;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	int		must_eat;
-}	t_info;
+	int			id;
+	int			num_of_philos;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	int			must_eat;
+	int			count_eating;  // 메인 스레드 - 모니터링 스레드
+	long		launch_time;
+	long		last_eat_time;  // 메인 스레드 - 모니터링 스레드
+	pid_t		*pid;
+	pthread_t	monitor;
+	sem_t		*forks_sem;
+	sem_t		*print_sem;
+	sem_t		*count_sem;
+	sem_t		*last_sem;
+}	t_philo;
 
-int		init_info(t_info **info, char **argv);
+int		init_info(t_philo **philo, char **argv);
+int		init_philo(t_philo **philo);
+
+int		create_processes(t_philo **philo);
+void	create_thread(t_philo **philo);
+
+void	child_behave(t_philo **philo);
+
 int		valid_argv(int argc, char **argv);
-int		er_print(char *s);
+
 int		ft_atoi(char *s);
-long	ft_atol(char *s);
+int		ft_atol(char *s);
 long	gettime(void);
+
+int		er_print(char *s);
+int		er_free_philo(t_philo **philo);
+int		er_unlink_free(t_philo **philo);
 
 #endif

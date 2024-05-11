@@ -6,13 +6,13 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 12:43:39 by jewlee            #+#    #+#              #
-#    Updated: 2024/05/10 13:33:34 by jewlee           ###   ########.fr        #
+#    Updated: 2024/05/10 20:29:43 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -f
 SRCS = ./srcs/main.c \
 	./srcs/init.c \

@@ -1,43 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/01 20:52:51 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/11 22:03:46 by jewlee           ###   ########.fr       */
+/*   Created: 2024/05/11 21:49:12 by jewlee            #+#    #+#             */
+/*   Updated: 2024/05/11 22:27:38 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../include/philo_bonus.h"
 
-int	valid_argv(int argc, char **argv)
+long	ft_atol(char *s)
 {
-	int	i;
-	int	j;
+	long long	res;
 
-	i = 0;
-	while (++i < argc)
+	res = 0;
+	while (*s >= '0' && *s <= '9')
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
+		res = (res * 10) + (*s - '0');
+		if (res > 2147483647)
 		{
-			if (argv[i][j] < '0' || argv[i][j] > '9')
-				return (FALSE);
-			j++;
+			er_print("Invalid long integer.");
+			return (-1);
 		}
+		s++;
 	}
-	return (TRUE);
-}
-
-long	gettime(void)
-{
-	struct timeval	tv;
-
-	if (gettimeofday(&tv, NULL) != 0)
-		return (FAIL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	return ((long)res);
 }
 
 int	ft_atoi(char *s)
@@ -50,7 +40,7 @@ int	ft_atoi(char *s)
 		res = (res * 10) + (*s - '0');
 		if (res > 2147483647)
 		{
-			er_print("Invalid integer.\n");
+			er_print("Invalid integer.");
 			return (-1);
 		}
 		s++;
@@ -58,28 +48,11 @@ int	ft_atoi(char *s)
 	return ((int)res);
 }
 
-long	ft_atol(char *s)
+long	gettime(void)
 {
-	long long	res;
+	struct timeval	tv;
 
-	while (*s < '0' || *s > '9')
-		s++;
-	res = 0;
-	while (*s >= '0' && *s <= '9')
-	{
-		res = (res * 10) + (*s - '0');
-		if (res > 2147483647)
-		{
-			er_print("Invalid long integer.\n");
-			return (-1);
-		}
-		s++;
-	}
-	return ((long)res);
-}
-
-int	er_print(char *s)
-{
-	printf("%s\n", s);
-	return (FAIL);
+	if (gettimeofday(&tv, NULL) != 0)
+		return (FAIL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }

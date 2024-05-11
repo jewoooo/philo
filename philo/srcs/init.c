@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 20:50:41 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/10 00:22:39 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/10 21:08:00 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,14 @@ int	init_forks(t_info **info, t_philo **philos)
 	forks = malloc(sizeof(t_fork) * (*info)->num_of_philos);
 	if (forks == NULL)
 	{
-		free(info);
-		free(philos);
+		free(*info);
+		free(*philos);
 		return (FAIL);
 	}
 	memset(forks, 0, sizeof(t_fork) * (*info)->num_of_philos);
 	i = -1;
 	while (++i < (*info)->num_of_philos)
 	{
-		forks[i].taken = FALSE;
 		(*philos)[i].left_fork = &(forks[i]);
 		if ((*info)->num_of_philos == 1)
 			(*philos)[i].right_fork = NULL;
