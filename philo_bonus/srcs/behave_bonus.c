@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:27:16 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/12 23:39:34 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 02:04:03 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	eating(t_philo *philo)
 	philo_print("has taken a fork", philo);
 	philo_print("is eating", philo);
 	start = gettime();
-	while (gettime() - start < philo->time_to_eat);
+	while (TRUE)
+	{
+		if (gettime() - start >= philo->time_to_eat)
+			break ;
+	}
 	sem_wait(philo->last_sem);
 	philo->last_eat_time = gettime();
 	sem_post(philo->last_sem);
@@ -39,7 +43,11 @@ void	sleeping(t_philo *philo)
 
 	philo_print("is sleeping", philo);
 	start = gettime();
-	while (gettime() - start < philo->time_to_sleep);
+	while (TRUE)
+	{
+		if (gettime() - start >= philo->time_to_sleep)
+			break ;
+	}
 }
 
 void	thinking(t_philo *philo)
@@ -50,11 +58,20 @@ void	thinking(t_philo *philo)
 void	child_behave(t_philo *philo)
 {
 	if (philo->id % 2 == 1)
-		usleep(philo->time_to_eat / 4 * 1000);
+		usleep(philo->time_to_eat / 2 * 1000);
 	while (TRUE)
 	{
 		eating(philo);
+		if (philo->must_eat != -1
+			&& check_eat_enough(philo) == TRUE)
+			exit(FINISHED_MEALS);
 		sleeping(philo);
+		if (philo->must_eat != -1
+			&& check_eat_enough(philo) == TRUE)
+			exit(FINISHED_MEALS);
 		thinking(philo);
+		if (philo->must_eat != -1
+			&& check_eat_enough(philo) == TRUE)
+			exit(FINISHED_MEALS);
 	}
 }

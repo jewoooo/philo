@@ -6,13 +6,13 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 11:48:05 by jewlee            #+#    #+#              #
-#    Updated: 2024/05/12 23:29:06 by jewlee           ###   ########.fr        #
+#    Updated: 2024/05/13 01:50:06 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 SRCS = ./srcs/main_bonus.c \
 	./srcs/init_bonus.c \

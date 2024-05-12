@@ -6,13 +6,12 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:56:31 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/12 11:57:37 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 02:01:14 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo_bonus.h"
 
-// 0644 -> 소유자의 읽기(0400), 쓰기(0200) + 그룹과 기타사용자의 읽기(40, 4)
 int	init_sem(t_philo **philo)
 {
 	sem_unlink("/forks_sem");
@@ -50,6 +49,7 @@ int	init_philo(t_philo **philo)
 	memset((*philo)->pid, 0, sizeof(pid_t) * size);
 	return (SUCCESS);
 }
+
 int	init_info(t_philo **philo, char **argv)
 {
 	*philo = malloc(sizeof(t_philo));

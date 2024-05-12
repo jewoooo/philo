@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:42:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/12 23:23:49 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 01:42:09 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,9 @@ typedef struct s_philo
 	long		time_to_eat;
 	long		time_to_sleep;
 	int			must_eat;
-	int			count_eating;  // 메인 스레드 - 모니터링 스레드
+	int			count_eating;
 	long		launch_time;
-	long		last_eat_time;  // 메인 스레드 - 모니터링 스레드
-	int			child_exit_status;
+	long		last_eat_time;
 	pid_t		*pid;
 	pthread_t	monitor;
 	sem_t		*forks_sem;
@@ -61,6 +60,7 @@ void	create_thread(t_philo *philo);
 void	child_behave(t_philo *philo);
 
 void	philo_print(char *s, t_philo *philo);
+int		check_eat_enough(t_philo *philo);
 
 int		valid_argv(int argc, char **argv);
 
