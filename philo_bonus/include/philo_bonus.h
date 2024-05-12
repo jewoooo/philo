@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:42:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/11 23:50:23 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/12 23:23:49 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 # define PHILO_BONUS_H
 
 # include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 # include <signal.h>
 # include <pthread.h>
 # include <semaphore.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 
 # define SUCCESS 0
 # define FAIL 1
 # define TRUE 1
 # define FALSE 0
+# define DIED_BY_TIME 2
+# define FINISHED_MEALS 3
+
 typedef struct s_philo
 {
 	int			id;
@@ -35,27 +41,34 @@ typedef struct s_philo
 	int			count_eating;  // 메인 스레드 - 모니터링 스레드
 	long		launch_time;
 	long		last_eat_time;  // 메인 스레드 - 모니터링 스레드
+	int			child_exit_status;
 	pid_t		*pid;
 	pthread_t	monitor;
 	sem_t		*forks_sem;
 	sem_t		*print_sem;
 	sem_t		*count_sem;
 	sem_t		*last_sem;
+	sem_t		*die_sem;
 }	t_philo;
 
 int		init_info(t_philo **philo, char **argv);
 int		init_philo(t_philo **philo);
+int		init_sem(t_philo **philo);
 
-int		create_processes(t_philo **philo);
-void	create_thread(t_philo **philo);
+int		create_processes(t_philo *philo);
+void	create_thread(t_philo *philo);
 
-void	child_behave(t_philo **philo);
+void	child_behave(t_philo *philo);
+
+void	philo_print(char *s, t_philo *philo);
 
 int		valid_argv(int argc, char **argv);
 
 int		ft_atoi(char *s);
-int		ft_atol(char *s);
+long	ft_atol(char *s);
 long	gettime(void);
+
+void	unlink_free(t_philo **philo);
 
 int		er_print(char *s);
 int		er_free_philo(t_philo **philo);

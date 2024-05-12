@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:56:31 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/11 22:56:22 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/12 11:57:37 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 // 0644 -> 소유자의 읽기(0400), 쓰기(0200) + 그룹과 기타사용자의 읽기(40, 4)
 int	init_sem(t_philo **philo)
 {
-	sem_unlink("./forks_sem");
-	(*philo)->forks_sem = sem_open("./forks_sem", O_CREAT,
+	sem_unlink("/forks_sem");
+	(*philo)->forks_sem = sem_open("/forks_sem", O_CREAT,
 			0644, (*philo)->num_of_philos);
 	if ((*philo)->forks_sem == SEM_FAILED)
 		return (er_unlink_free(philo));
-	sem_unlink("./die_sem");
-	(*philo)->die_sem = sem_open("./die_sem", O_CREAT, 0644, 1);
+	sem_unlink("/die_sem");
+	(*philo)->die_sem = sem_open("/die_sem", O_CREAT, 0644, 1);
 	if ((*philo)->die_sem == SEM_FAILED)
 		return (er_unlink_free(philo));
-	sem_unlink("./print_sem");
-	(*philo)->print_sem = sem_open("./print_sem", O_CREAT, 0644, 1);
+	sem_unlink("/print_sem");
+	(*philo)->print_sem = sem_open("/print_sem", O_CREAT, 0644, 1);
 	if ((*philo)->print_sem == SEM_FAILED)
 		return (er_unlink_free(philo));
-	sem_unlink("./count_sem");
-	(*philo)->count_sem = sem_open("./count_sem", O_CREAT, 0644, 1);
+	sem_unlink("/count_sem");
+	(*philo)->count_sem = sem_open("/count_sem", O_CREAT, 0644, 1);
 	if ((*philo)->count_sem == SEM_FAILED)
 		return (er_unlink_free(philo));
-	sem_unlink("./last_sem");
-	(*philo)->last_sem = sem_open("./last_sem", O_CREAT, 0644, 1);
+	sem_unlink("/last_sem");
+	(*philo)->last_sem = sem_open("/last_sem", O_CREAT, 0644, 1);
 	if ((*philo)->last_sem == SEM_FAILED)
 		return (er_unlink_free(philo));
 	return (SUCCESS);

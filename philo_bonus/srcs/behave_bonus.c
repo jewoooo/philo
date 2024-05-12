@@ -6,19 +6,11 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:27:16 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/11 23:48:08 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/12 23:39:34 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo_bonus.h"
-
-void	philo_print(char *s, t_philo *philo)
-{
-	sem_wait(philo->print_sem);
-	printf("%d %d %s\n", philo->id,
-		gettime() - philo->launch_time, s);
-	sem_post(philo->print_sem);
-}
 
 void	eating(t_philo *philo)
 {
@@ -55,12 +47,12 @@ void	thinking(t_philo *philo)
 	philo_print("is thinking", philo);
 }
 
-void	child_behave(t_philo **philo)
+void	child_behave(t_philo *philo)
 {
-	if ((*philo)->id % 2 == 1)
-		usleep((*philo)->time_to_eat / 2 * 1000);
+	if (philo->id % 2 == 1)
+		usleep(philo->time_to_eat / 4 * 1000);
 	while (TRUE)
-	{	
+	{
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);

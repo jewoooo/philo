@@ -5,23 +5,25 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/05/07 12:43:39 by jewlee            #+#    #+#              #
-#    Updated: 2024/05/12 11:56:06 by jewlee           ###   ########.fr        #
+#    Created: 2024/05/12 11:48:05 by jewlee            #+#    #+#              #
+#    Updated: 2024/05/12 23:29:06 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+NAME = philo_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 RM = rm -f
-SRCS = ./srcs/main.c \
-	./srcs/init.c \
-	./srcs/check.c \
-	./srcs/free.c \
-	./srcs/utils.c \
-	./srcs/threads.c \
-	./srcs/behave.c \
-	./srcs/behave_utils.c
+SRCS = ./srcs/main_bonus.c \
+	./srcs/init_bonus.c \
+	./srcs/behave_bonus.c \
+	./srcs/behave_utils_bonus.c \
+	./srcs/error_bonus.c \
+	./srcs/valid_bonus.c \
+	./srcs/utils_bonus.c \
+	./srcs/thread_bonus.c \
+	./srcs/processes_bonus.c \
+	./srcs/free_bonus.c
 INCLUDE = ./include
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:47:21 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/11 22:56:08 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/12 23:25:09 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,8 @@ int	main(int argc, char **argv)
 		return (er_print("Failed init_sem."));
 	if (init_philo(&philo) == FAIL)
 		return (er_print("Failed init_philo."));
-	return (SUCCESS);
+	if (create_processes(philo) == FAIL)
+		return (er_print("Failed create_proccess"));
+	unlink_free(&philo);
+	exit(SUCCESS);
 }
