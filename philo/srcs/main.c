@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 20:39:33 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/10 20:55:32 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 10:04:00 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 		return (er_print("Failed create_thread."));
 	if (join_thread(&info, &philos) == FAIL)
 		return (er_print("Failed join_thread."));
-	// destroy_mutex(info);
+	destroy_mutex(info);
 	free_all(&info, &philos, &(info->forks));
 	return (SUCCESS);
 }

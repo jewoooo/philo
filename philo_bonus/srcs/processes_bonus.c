@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 22:40:58 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 01:50:34 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 10:15:42 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	wait_child(t_philo *philo)
 	while (TRUE)
 	{
 		waitpid(-1, &status, 0);
-		if (WEXITSTATUS(status) == DIED_BY_TIME)
+		if (WEXITSTATUS(status) == DIED_BY_TIME
+			|| WEXITSTATUS(status) == FAIL_PTH)
 		{
 			i = -1;
 			while (++i < philo->num_of_philos)

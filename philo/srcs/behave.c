@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 14:15:03 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/10 00:26:53 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 10:08:48 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	take_fork(t_philo *philo, t_fork *fork)
 	}
 }
 
-static void	put_fork(t_fork *fork)
+void	put_fork(t_fork *fork)
 {
 	fork->taken = FALSE;
 	pthread_mutex_unlock(&(fork->mutex));
@@ -36,13 +36,12 @@ int	eating(t_philo *philo)
 	take_fork(philo, philo->left_fork);
 	if (info->num_of_philos == 1)
 	{
-		while (check_died(philo) == FALSE);
-		put_fork(philo->left_fork);
+		one_philo_case(philo);
 		return (FAIL);
 	}
 	take_fork(philo, philo->right_fork);
-	if (philo_print("is eating", philo) == FAIL ||
-		philo_sleep(gettime(), info->time_to_eat, philo) == FAIL)
+	if (philo_print("is eating", philo) == FAIL
+		|| philo_sleep(gettime(), info->time_to_eat, philo) == FAIL)
 	{
 		put_fork(philo->right_fork);
 		put_fork(philo->left_fork);

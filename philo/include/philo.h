@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:18:25 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/09 23:34:32 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 10:08:23 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,12 @@ void	destroy_mutex(t_info *info);
 int		create_thread(t_info **info, t_philo **philos);
 int		join_thread(t_info **info, t_philo **philos);
 
+void	put_fork(t_fork *fork);
 int		eating(t_philo *philo);
 int		sleeping(t_philo *philo);
 int		thinking(t_philo *philo);
+
+void	one_philo_case(t_philo *philo);
 
 int		philo_sleep(long start, long sleep_time, t_philo *philo);
 int		philo_print(char *s, t_philo *philo);

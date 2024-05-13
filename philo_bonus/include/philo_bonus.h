@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:42:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 01:42:09 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 10:14:40 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define FALSE 0
 # define DIED_BY_TIME 2
 # define FINISHED_MEALS 3
+# define FAIL_PTH 4
 
 typedef struct s_philo
 {

@@ -6,13 +6,12 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:47:21 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 01:47:55 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 10:01:32 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo_bonus.h"
 
-// ./philo 철학자수 수명 식사시간 수면시간 [먹어야하는횟수]
 int	main(int argc, char **argv)
 {
 	t_philo	*philo;

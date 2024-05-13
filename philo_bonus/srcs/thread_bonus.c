@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:48:38 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 02:00:05 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 10:14:30 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,7 @@ void	*monitoring(void *args)
 
 void	create_thread(t_philo *philo)
 {
-	int	i;
-
-	i = -1;
 	if (pthread_create(&(philo->monitor), NULL, &monitoring, philo) != 0)
-	{
-		while (++i < philo->num_of_philos)
-			kill(philo->pid[i], SIGKILL);
-		exit(FAIL);
-	}
+		exit(FAIL_PTH);
 	pthread_detach(philo->monitor);
 }
