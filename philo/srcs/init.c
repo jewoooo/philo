@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 20:50:41 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/10 21:08:00 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:41:27 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	init_mutex(t_info **info, t_philo **philos)
 
 	forks = (*info)->forks;
 	if (pthread_mutex_init(&((*info)->die_mutex), NULL) != 0
-		|| pthread_mutex_init(&((*info)->print_mutex), NULL) != 0)
+		|| pthread_mutex_init(&((*info)->print_mutex), NULL) != 0
+		|| pthread_mutex_init(&((*info)->satis_mutex), NULL) != 0
+		|| pthread_mutex_init(&((*info)->finished_mutex), NULL) != 0)
 		return (er_free_all(info, philos, &forks));
 	i = -1;
 	while (++i < (*info)->num_of_philos)
 	{
-		if (pthread_mutex_init(&((*philos)[i].time_mutex), NULL) != 0 ||
-			pthread_mutex_init(&((*philos)[i].count_mutex), NULL) != 0 ||
-			pthread_mutex_init(&(forks[i].mutex), NULL) != 0)
+		if (pthread_mutex_init(&(forks[i].mutex), NULL) != 0)
 			return (er_free_all(info, philos, &forks));
 	}
 	return (SUCCESS);
@@ -99,5 +99,9 @@ int	init_info(t_info **info, char **argv)
 	else
 		(*info)->must_eat = (-1);
 	(*info)->launch_time = gettime();
+	(*info)->satisfied = malloc(sizeof(int) * (*info)->num_of_philos);
+	if ((*info)->satisfied == NULL)
+		return (er_free_info(info));
+	memset((*info)->satisfied, 0, sizeof(int) * (*info)->num_of_philos);
 	return (SUCCESS);
 }

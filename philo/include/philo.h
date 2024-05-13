@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:18:25 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 10:08:23 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:51:04 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef struct s_philo
 	struct s_fork	*left_fork;
 	struct s_fork	*right_fork;
 	pthread_t		th;
-	pthread_mutex_t	time_mutex;
-	pthread_mutex_t	count_mutex;
 }	t_philo;
 
 typedef struct s_fork
@@ -52,12 +50,16 @@ typedef struct s_info
 	long			time_to_sleep;
 	int				must_eat;
 	int				died;
+	int				*satisfied;
+	int				finished;
 	long			launch_time;
 	t_fork			*forks;
 	t_philo			*philos;
 	pthread_t		monitor;
 	pthread_mutex_t	die_mutex;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	satis_mutex;
+	pthread_mutex_t	finished_mutex;
 }	t_info;
 
 int		valid_argv(int argc, char **argv);
@@ -78,18 +80,19 @@ int		join_thread(t_info **info, t_philo **philos);
 
 void	put_fork(t_fork *fork);
 int		eating(t_philo *philo);
-int		sleeping(t_philo *philo);
-int		thinking(t_philo *philo);
+void	sleeping(t_philo *philo);
+void	thinking(t_philo *philo);
 
 void	one_philo_case(t_philo *philo);
 
-int		philo_sleep(long start, long sleep_time, t_philo *philo);
-int		philo_print(char *s, t_philo *philo);
-void	reset_last_eat_time(t_philo *philo);
+void	philo_sleep(long start, long sleep_time);
+void	philo_print(char *s, t_philo *philo);
 
 int		check_died(t_philo *philo);
 int		check_dead(t_philo *philos);
-int		check_all_philos_eating(t_philo *philos);
+int		check_finished(t_philo *philo);
+void	check_satisfied(t_philo *philo);
+int		check_all_satisfied(t_philo *philos);
 
 long	gettime(void);
 int		ft_atoi(char *s);

@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 13:40:15 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/10 00:25:38 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/13 16:32:32 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,19 @@ void	*philo_routine(void *args)
 	philo = (t_philo *)args;
 	info = philo->info;
 	if (philo->id % 2 == 1 && info->num_of_philos != 1)
-		usleep(info->time_to_eat / 4 * 1000);
+		usleep(info->time_to_eat / 2 * 1000);
 	while (TRUE)
 	{
-		if (check_died(philo) == TRUE)
-			break ;
 		if (eating(philo) == FAIL)
 			break ;
-		if (check_died(philo) == TRUE)
+		if (check_died(philo) == TRUE
+			|| check_finished(philo) == TRUE)
 			break ;
-		if (sleeping(philo) == FAIL)
+		sleeping(philo);
+		if (check_died(philo) == TRUE
+			|| check_finished(philo) == TRUE)
 			break ;
-		if (check_died(philo) == TRUE)
-			break ;
-		if (thinking(philo) == FAIL)
-			break ;
-		if (check_died(philo) == TRUE)
-			break ;
+		thinking(philo);
 	}
 	return (NULL);
 }
@@ -52,14 +48,14 @@ void	*monitoring(void *args)
 		usleep(info->time_to_die / 2 * 1000);
 	while (TRUE)
 	{
-		if (check_dead(philos) == TRUE
-			|| (info->must_eat != -1
-				&& check_all_philos_eating(philos) == TRUE))
-		{
-			pthread_mutex_lock(&(info->die_mutex));
-			info->died = TRUE;
-			pthread_mutex_unlock(&(info->die_mutex));
+		if (check_dead(philos) == TRUE)
 			break ;
+		if (info->must_eat != -1
+			&& check_all_satisfied(philos) == TRUE)
+		{
+			pthread_mutex_lock(&(info->finished_mutex));
+			info->finished = TRUE;
+			pthread_mutex_unlock(&(info->finished_mutex));
 		}
 	}
 	return (NULL);
