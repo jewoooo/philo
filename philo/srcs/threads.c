@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 13:40:15 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/14 16:00:28 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:13:29 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,16 @@ void	*philo_routine(void *args)
 
 	philo = (t_philo *)args;
 	info = philo->info;
+	while (TRUE)
+		if (check_created(info) == TRUE)
+			break ;
 	if (philo->id % 2 == 1 && info->num_of_philos != 1)
 		usleep(info->time_to_eat / 2 * 1000);
 	while (TRUE)
 	{
-		if (check_died(philo) == TRUE || check_finished(philo) == TRUE)
-			break ;
-		if (eating(philo) == FAIL)
+		if (check_died(philo) == TRUE
+			|| eating(philo) == FAIL
+			|| check_finished(philo) == TRUE)
 			break ;
 		if (check_died(philo) == TRUE || check_finished(philo) == TRUE)
 			break ;
@@ -33,8 +36,6 @@ void	*philo_routine(void *args)
 		if (check_died(philo) == TRUE || check_finished(philo) == TRUE)
 			break ;
 		thinking(philo);
-		if (check_died(philo) == TRUE || check_finished(philo) == TRUE)
-			break ;
 	}
 	return (NULL);
 }
@@ -67,6 +68,7 @@ int	create_thread(t_info **info, t_philo **philos)
 {
 	int	i;
 
+	pthread_mutex_lock(&((*info)->start_mutex));
 	i = -1;
 	while (++i < (*info)->num_of_philos)
 	{
@@ -75,6 +77,8 @@ int	create_thread(t_info **info, t_philo **philos)
 			&philo_routine, &((*philos)[i])) != 0)
 			return (er_free_all(info, philos, &((*info)->forks)));
 	}
+	(*info)->created = TRUE;
+	pthread_mutex_unlock(&((*info)->start_mutex));
 	if (pthread_create(&((*info)->monitor), NULL, &monitoring, *info) != 0)
 		return (er_free_all(info, philos, &((*info)->forks)));
 	return (SUCCESS);

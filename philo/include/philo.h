@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:18:25 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/14 15:49:50 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:13:56 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_info
 	int				died;
 	int				*satisfied;
 	int				finished;
+	int				created;
 	long			launch_time;
 	t_fork			*forks;
 	t_philo			*philos;
@@ -60,6 +61,7 @@ typedef struct s_info
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	satis_mutex;
 	pthread_mutex_t	finished_mutex;
+	pthread_mutex_t	start_mutex;
 }	t_info;
 
 int		valid_argv(int argc, char **argv);
@@ -93,6 +95,7 @@ int		check_dead(t_philo *philos);
 int		check_finished(t_philo *philo);
 void	check_satisfied(t_philo *philo);
 int		check_all_satisfied(t_philo *philos);
+int		check_created(t_info *info);
 
 long	gettime(void);
 int		ft_atoi(char *s);
