@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 13:40:15 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 16:32:32 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/14 16:00:28 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,18 @@ void	*philo_routine(void *args)
 		usleep(info->time_to_eat / 2 * 1000);
 	while (TRUE)
 	{
+		if (check_died(philo) == TRUE || check_finished(philo) == TRUE)
+			break ;
 		if (eating(philo) == FAIL)
 			break ;
-		if (check_died(philo) == TRUE
-			|| check_finished(philo) == TRUE)
+		if (check_died(philo) == TRUE || check_finished(philo) == TRUE)
 			break ;
 		sleeping(philo);
-		if (check_died(philo) == TRUE
-			|| check_finished(philo) == TRUE)
+		if (check_died(philo) == TRUE || check_finished(philo) == TRUE)
 			break ;
 		thinking(philo);
+		if (check_died(philo) == TRUE || check_finished(philo) == TRUE)
+			break ;
 	}
 	return (NULL);
 }
@@ -83,12 +85,13 @@ int	join_thread(t_info **info, t_philo **philos)
 	int	i;
 
 	i = -1;
+	pthread_detach((*info)->monitor);
 	while (++i < (*info)->num_of_philos)
 	{
 		if (pthread_join((*philos)[i].th, NULL) != 0)
 			return (er_free_all(info, philos, &((*info)->forks)));
 	}
-	if (pthread_join((*info)->monitor, NULL) != 0)
-		return (er_free_all(info, philos, &((*info)->forks)));
+	// if (pthread_join((*info)->monitor, NULL) != 0)
+	// 	return (er_free_all(info, philos, &((*info)->forks)));
 	return (SUCCESS);
 }
