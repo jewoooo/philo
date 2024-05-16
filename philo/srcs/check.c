@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 03:50:44 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/16 10:42:14 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:37:45 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	check_died(t_info *info)
 
 int	check_finished_flag(t_info *info)
 {
+	if (info->must_eat <= 0)
+		return (FALSE);
 	pthread_mutex_lock(&(info->finished_mutex));
 	if (info->finished == TRUE)
 	{

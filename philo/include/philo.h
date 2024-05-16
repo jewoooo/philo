@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:18:25 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/16 10:50:33 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/16 16:10:49 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,14 @@ int		create_thread(t_info **info, t_philo **philos);
 int		join_thread(t_info **info, t_philo **philos);
 
 int		eating(t_philo *philo);
-int		sleeping(t_philo *philo);
-int		thinking(t_philo *philo);
+void	sleeping(t_philo *philo);
+void	thinking(t_philo *philo);
 
+void	reset_count_meal(t_philo *philo);
+void	reset_last_meal(t_philo *philo);
 void	one_philo_case(t_philo *philo);
-
-int		philo_sleep(t_info *info, long sleep_time);
-int		philo_print(char *s, t_philo *philo);
+void	philo_print(char *s, t_philo *philo);
+void	philo_sleep(long sleep_time);
 
 int		check_died(t_info *info);
 int		check_died_flag(t_info *info);

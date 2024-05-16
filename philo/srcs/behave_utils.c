@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:52:56 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/16 10:52:29 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:59:51 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,43 @@ void	one_philo_case(t_philo *philo)
 	}
 }
 
-int	philo_print(char *s, t_philo *philo)
+void	philo_print(char *s, t_philo *philo)
 {
 	t_info	*info;
 
 	info = philo->info;
 	pthread_mutex_lock(&(info->print_mutex));
-	printf("%ld %d %s\n", gettime() - info->launch_time,
-		philo->id, s);
+	if (check_died_flag(info) != TRUE)
+	{
+		printf("%ld %d %s\n", gettime() - info->launch_time,
+			philo->id, s);
+	}
 	pthread_mutex_unlock(&(info->print_mutex));
-	return (SUCCESS);
 }
 
-int	philo_sleep(t_info *info, long sleep_time)
+void	philo_sleep(long sleep_time)
 {
 	long	start;
 
 	start = gettime();
 	while (TRUE)
 	{
-		if (check_died_flag(info) == TRUE || check_finished_flag(info) == TRUE)
-			return (FAIL);
 		if (gettime() - start >= sleep_time)
 			break ;
 		usleep(500);
 	}
-	return (SUCCESS);
+}
+
+void	reset_last_meal(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->last_mutex));
+	philo->last_meal = gettime();
+	pthread_mutex_unlock(&(philo->last_mutex));
+}
+
+void	reset_count_meal(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->count_mutex));
+	philo->count_meal += 1;
+	pthread_mutex_unlock(&(philo->count_mutex));
 }
