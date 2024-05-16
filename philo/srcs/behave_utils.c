@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:52:56 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 16:20:43 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/16 09:32:47 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	one_philo_case(t_philo *philo)
 		if (check_died(philo) == TRUE)
 			break ;
 	}
-	put_fork(philo->left_fork);
 }
 
 void	philo_print(char *s, t_philo *philo)
@@ -33,11 +32,11 @@ void	philo_print(char *s, t_philo *philo)
 	pthread_mutex_unlock(&(info->print_mutex));
 }
 
-void	philo_sleep(long start, long sleep_time)
+void	philo_sleep(long milli)
 {
-	while (TRUE)
-	{
-		if (gettime() - start >= sleep_time)
-			break ;
-	}
+	long	start;
+
+	start = gettime();
+	while ((gettime() - start) < milli)
+		usleep(500);
 }

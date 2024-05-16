@@ -6,7 +6,7 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 12:43:39 by jewlee            #+#    #+#              #
-#    Updated: 2024/05/14 16:14:07 by jewlee           ###   ########.fr        #
+#    Updated: 2024/05/16 08:45:35 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 RM = rm -f
 SRCS = ./srcs/main.c \
 	./srcs/init.c \
-	./srcs/check1.c \
-	./srcs/check2.c \
+	./srcs/check.c \
 	./srcs/free.c \
 	./srcs/utils.c \
 	./srcs/threads.c \
