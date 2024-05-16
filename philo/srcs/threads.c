@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 13:40:15 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/16 09:28:37 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/16 10:36:41 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*monitoring(void *args)
 	if (info->num_of_philos != 1)
 		usleep(info->time_to_die / 2 * 1000);
 	while (TRUE)
-		if (check_died_flag(info) == TRUE || check_all_finished(info) == TRUE)
+		if (check_died(info) == TRUE || check_all_finished(info) == TRUE)
 			break ;
 	return (NULL);
 }

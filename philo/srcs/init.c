@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 20:50:41 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/16 09:20:12 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/16 10:40:05 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	init_mutex(t_info **info, t_philo **philos)
 	while (++i < (*info)->num_of_philos)
 	{
 		if (pthread_mutex_init(&(forks[i].mutex), NULL) != 0
-			|| pthread_mutex_init(&((*philos)[i].count_mutex), NULL) != 0)
+			|| pthread_mutex_init(&((*philos)[i].count_mutex), NULL) != 0
+			|| pthread_mutex_init(&((*philos)[i].last_mutex), NULL) != 0)
 			return (er_free_all(info, philos, &forks));
 	}
 	return (SUCCESS);

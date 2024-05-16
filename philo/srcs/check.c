@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 03:50:44 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/16 09:30:25 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/16 10:42:14 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,26 @@ int	check_died_flag(t_info *info)
 	return (FALSE);
 }
 
-int	check_died(t_philo *philo)
+int	check_died(t_info *info)
 {
-	t_info	*info;
+	t_philo	*philos;
+	int		i;
 
-	info = philo->info;
-	if (gettime() - philo->last_meal >= info->time_to_die)
+	philos = info->philos;
+	i = -1;
+	while (++i < info->num_of_philos)
 	{
-		philo_print("died", philo);
-		pthread_mutex_lock(&(info->died_mutex));
-		info->died = TRUE;
-		pthread_mutex_unlock(&(info->died_mutex));
-		return (TRUE);
+		pthread_mutex_lock(&(philos[i].last_mutex));
+		if (gettime() - philos[i].last_meal >= info->time_to_die)
+		{
+			pthread_mutex_unlock(&(philos[i].last_mutex));
+			philo_print("died", &(philos[i]));
+			pthread_mutex_lock(&(info->died_mutex));
+			info->died = TRUE;
+			pthread_mutex_unlock(&(info->died_mutex));
+			return (TRUE);
+		}
+		pthread_mutex_unlock(&(philos[i].last_mutex));
 	}
 	return (FALSE);
 }
@@ -58,6 +66,8 @@ int	check_all_finished(t_info *info)
 	int		i;
 	int		cnt;
 
+	if (info->must_eat < 0)
+		return (FALSE);
 	philos = info->philos;
 	i = -1;
 	cnt = 0;
