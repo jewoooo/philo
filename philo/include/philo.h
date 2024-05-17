@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:18:25 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/16 16:10:49 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/17 00:58:48 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	reset_count_meal(t_philo *philo);
 void	reset_last_meal(t_philo *philo);
 void	one_philo_case(t_philo *philo);
 void	philo_print(char *s, t_philo *philo);
-void	philo_sleep(long sleep_time);
+void	philo_sleep(t_info *info, long sleep_time);
 
 int		check_died(t_info *info);
 int		check_died_flag(t_info *info);

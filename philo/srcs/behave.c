@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 14:15:03 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/16 16:00:57 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/17 00:59:57 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	eating(t_philo *philo)
 	}
 	take_fork(philo, philo->right_fork);
 	philo_print("is eating", philo);
-	philo_sleep(info->time_to_eat);
 	reset_last_meal(philo);
 	if (info->must_eat > 0)
 		reset_count_meal(philo);
+	philo_sleep(info, info->time_to_eat);
 	put_fork(philo->right_fork);
 	put_fork(philo->left_fork);
 	return (SUCCESS);
@@ -51,7 +51,7 @@ int	eating(t_philo *philo)
 void	sleeping(t_philo *philo)
 {
 	philo_print("is sleeping", philo);
-	philo_sleep(philo->info->time_to_sleep);
+	philo_sleep(philo->info, philo->info->time_to_sleep);
 }
 
 void	thinking(t_philo *philo)

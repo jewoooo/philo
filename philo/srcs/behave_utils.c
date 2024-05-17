@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:52:56 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/16 15:59:51 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/17 01:03:59 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	philo_print(char *s, t_philo *philo)
 	pthread_mutex_unlock(&(info->print_mutex));
 }
 
-void	philo_sleep(long sleep_time)
+void	philo_sleep(t_info *info, long sleep_time)
 {
 	long	start;
 
@@ -43,6 +43,8 @@ void	philo_sleep(long sleep_time)
 	while (TRUE)
 	{
 		if (gettime() - start >= sleep_time)
+			break ;
+		if (check_died_flag(info) == TRUE)
 			break ;
 		usleep(500);
 	}
