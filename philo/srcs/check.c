@@ -6,11 +6,23 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 03:50:44 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/16 15:37:45 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/17 18:11:03 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+int	check_started_flag(t_info *info)
+{
+	pthread_mutex_lock(&(info->started_mutex));
+	if (info->started == TRUE)
+	{
+		pthread_mutex_unlock(&(info->started_mutex));
+		return (TRUE);
+	}
+	pthread_mutex_unlock(&(info->started_mutex));
+	return (FALSE);
+}
 
 int	check_died_flag(t_info *info)
 {

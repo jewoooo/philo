@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:18:25 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/17 00:58:48 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/17 18:30:55 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ typedef struct s_info
 	long			time_to_sleep;
 	int				must_eat;
 	int				died;
+	int				started;
 	int				finished;
 	long			launch_time;
 	t_fork			*forks;
 	t_philo			*philos;
 	pthread_t		monitor;
+	pthread_mutex_t	started_mutex;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	died_mutex;
 	pthread_mutex_t	finished_mutex;
@@ -78,6 +80,9 @@ void	destroy_mutex(t_info *info);
 int		create_thread(t_info **info, t_philo **philos);
 int		join_thread(t_info **info, t_philo **philos);
 
+void	even_behave(t_philo *philo);
+void	odd_behave(t_philo *philo);
+
 int		eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	thinking(t_philo *philo);
@@ -90,8 +95,9 @@ void	philo_sleep(t_info *info, long sleep_time);
 
 int		check_died(t_info *info);
 int		check_died_flag(t_info *info);
-int		check_all_finished(t_info *info);
+int		check_started_flag(t_info *info);
 int		check_finished_flag(t_info *info);
+int		check_all_finished(t_info *info);
 
 long	gettime(void);
 int		ft_atoi(char *s);
