@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:18:25 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/17 18:30:55 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/17 23:16:25 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_philo
 	struct s_fork	*left_fork;
 	struct s_fork	*right_fork;
 	pthread_mutex_t	count_mutex;
-	pthread_mutex_t	last_mutex;
 }	t_philo;
 
 typedef struct s_fork
@@ -88,12 +87,11 @@ void	sleeping(t_philo *philo);
 void	thinking(t_philo *philo);
 
 void	reset_count_meal(t_philo *philo);
-void	reset_last_meal(t_philo *philo);
 void	one_philo_case(t_philo *philo);
 void	philo_print(char *s, t_philo *philo);
-void	philo_sleep(t_info *info, long sleep_time);
+void	philo_sleep(t_philo *philo, long sleep_time);
 
-int		check_died(t_info *info);
+int		check_died(t_philo *philo);
 int		check_died_flag(t_info *info);
 int		check_started_flag(t_info *info);
 int		check_finished_flag(t_info *info);

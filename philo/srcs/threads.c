@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 13:40:15 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/17 18:31:06 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/18 23:15:21 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ void	*philo_routine(void *args)
 
 	philo = (t_philo *)args;
 	while (TRUE)
+	{
 		if (check_started_flag(philo->info) == TRUE)
 			break ;
-	reset_last_meal(philo);
-	if (philo->id % 2 == 0 && philo->info->num_of_philos != 1)
-		even_behave(philo);
-	else
+		usleep(500);
+	}
+	philo->last_meal = gettime();
+	if (philo->id % 2 == 1)
 		odd_behave(philo);
+	else
+		even_behave(philo);
 	return (NULL);
 }
 
@@ -34,13 +37,19 @@ void	*monitoring(void *args)
 
 	info = (t_info *)args;
 	while (TRUE)
+	{
 		if (check_started_flag(info) == TRUE)
 			break ;
+		usleep(500);
+	}
 	if (info->num_of_philos != 1)
 		usleep(info->time_to_die / 2 * 1000);
 	while (TRUE)
-		if (check_died(info) == TRUE || check_all_finished(info) == TRUE)
+	{
+		if (check_died_flag(info) == TRUE || check_all_finished(info) == TRUE)
 			break ;
+		usleep(500);
+	}
 	return (NULL);
 }
 
