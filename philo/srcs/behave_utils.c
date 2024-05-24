@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   behave_utils2.c                                    :+:      :+:    :+:   */
+/*   behave_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 14:52:56 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/18 23:24:34 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/24 20:35:11 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ void	one_philo_case(t_philo *philo)
 {
 	while (TRUE)
 	{
-		if (check_died(philo) == TRUE)
+		if (check_died_flag(philo->info) == TRUE)
 			break ;
-		usleep(500);
 	}
 }
 
@@ -36,19 +35,25 @@ void	philo_print(char *s, t_philo *philo)
 	pthread_mutex_unlock(&(info->print_mutex));
 }
 
-void	philo_sleep(t_philo *philo, long sleep_time)
+void	philo_sleep(long sleep_time, t_info *info)
 {
 	long	start;
 
 	start = gettime();
 	while (TRUE)
 	{
-		if (gettime() - start >= sleep_time)
-			break ;
-		if (check_died(philo) == TRUE)
+		if (gettime() - start >= sleep_time
+			|| check_died_flag(info) == TRUE)
 			break ;
 		usleep(500);
 	}
+}
+
+void	reset_last_meal(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->last_mutex));
+	philo->last_meal = gettime();
+	pthread_mutex_unlock(&(philo->last_mutex));
 }
 
 void	reset_count_meal(t_philo *philo)

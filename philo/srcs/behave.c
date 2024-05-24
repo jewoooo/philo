@@ -5,76 +5,61 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 18:12:24 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/18 23:21:15 by jewlee           ###   ########.fr       */
+/*   Created: 2024/05/06 14:15:03 by jewlee            #+#    #+#             */
+/*   Updated: 2024/05/24 20:31:24 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	even_behave(t_philo *philo)
+static void	take_fork(t_philo *philo, t_fork *fork)
 {
-	while (TRUE)
-	{
-		if (check_died_flag(philo->info) == TRUE
-			|| check_finished_flag(philo->info) == TRUE)
-			break ;
-		sleeping(philo);
-		if (check_died_flag(philo->info) == TRUE
-			|| check_finished_flag(philo->info) == TRUE)
-			break ;
-		thinking(philo);
-		if (check_died_flag(philo->info) == TRUE
-			|| check_finished_flag(philo->info) == TRUE)
-			break ;
-		if (eating(philo) == FAIL)
-			break ;
-	}
+	pthread_mutex_lock(&(fork->mutex));
+	fork->taken = TRUE;
+	philo_print("has taken a fork", philo);
 }
 
-static void	special_odd_behave(t_philo *philo)
+static void	put_fork(t_fork *fork)
 {
-	while (TRUE)
-	{
-		if (check_died_flag(philo->info) == TRUE
-			|| check_finished_flag(philo->info) == TRUE)
-			break ;
-		sleeping(philo);
-		if (check_died_flag(philo->info) == TRUE
-			|| check_finished_flag(philo->info) == TRUE)
-			break ;
-		thinking(philo);
-		if (check_died_flag(philo->info) == TRUE
-			|| check_finished_flag(philo->info) == TRUE)
-			break ;
-		if (eating(philo) == FAIL)
-			break ;
-	}
+	fork->taken = FALSE;
+	pthread_mutex_unlock(&(fork->mutex));
 }
 
-void	odd_behave(t_philo *philo)
+int	eating(t_philo *philo)
 {
-	if (philo->info->num_of_philos != 1
-		&& philo->info->num_of_philos % 2 == 1
-		&& philo->id == philo->info->num_of_philos)
-		special_odd_behave(philo);
-	else
+	t_info	*info;
+
+	info = philo->info;
+	take_fork(philo, philo->left_fork);
+	if (info->num_of_philos == 1)
 	{
-		while (TRUE)
-		{
-			if (check_died_flag(philo->info) == TRUE
-				|| check_finished_flag(philo->info) == TRUE)
-				break ;
-			if (eating(philo) == FAIL)
-				break ;
-			if (check_died_flag(philo->info) == TRUE
-				|| check_finished_flag(philo->info) == TRUE)
-				break ;
-			sleeping(philo);
-			if (check_died_flag(philo->info) == TRUE
-				|| check_finished_flag(philo->info) == TRUE)
-				break ;
-			thinking(philo);
-		}
+		one_philo_case(philo);
+		put_fork(philo->left_fork);
+		return (FAIL);
 	}
+	if (check_died_flag(info) == TRUE)
+	{
+		put_fork(philo->left_fork);
+		return (FAIL);
+	}
+	take_fork(philo, philo->right_fork);
+	philo_print("is eating", philo);
+	reset_last_meal(philo);
+	if (info->must_eat > 0)
+		reset_count_meal(philo);
+	philo_sleep(info->time_to_eat, philo->info);
+	put_fork(philo->right_fork);
+	put_fork(philo->left_fork);
+	return (SUCCESS);
+}
+
+void	sleeping(t_philo *philo)
+{
+	philo_print("is sleeping", philo);
+	philo_sleep(philo->info->time_to_sleep, philo->info);
+}
+
+void	thinking(t_philo *philo)
+{
+	philo_print("is thinking", philo);
 }

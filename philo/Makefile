@@ -6,13 +6,13 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/07 12:43:39 by jewlee            #+#    #+#              #
-#    Updated: 2024/05/17 18:28:14 by jewlee           ###   ########.fr        #
+#    Updated: 2024/05/24 13:52:15 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 SRCS = ./srcs/main.c \
 	./srcs/init.c \
@@ -21,8 +21,7 @@ SRCS = ./srcs/main.c \
 	./srcs/utils.c \
 	./srcs/threads.c \
 	./srcs/behave.c \
-	./srcs/behave_utils1.c \
-	./srcs/behave_utils2.c
+	./srcs/behave_utils.c
 INCLUDE = ./include
 OBJS = $(SRCS:.c=.o)
 

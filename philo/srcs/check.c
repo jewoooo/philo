@@ -6,23 +6,11 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 03:50:44 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/18 23:11:51 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/24 20:35:55 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-int	check_started_flag(t_info *info)
-{
-	pthread_mutex_lock(&(info->started_mutex));
-	if (info->started == TRUE)
-	{
-		pthread_mutex_unlock(&(info->started_mutex));
-		return (TRUE);
-	}
-	pthread_mutex_unlock(&(info->started_mutex));
-	return (FALSE);
-}
 
 int	check_died_flag(t_info *info)
 {
@@ -36,18 +24,29 @@ int	check_died_flag(t_info *info)
 	return (FALSE);
 }
 
-int	check_died(t_philo *philo)
+int	check_died(t_info *info)
 {
-	t_info	*info;
+	t_philo	*philos;
+	int		i;
 
-	info = philo->info;
-	if (gettime() - philo->last_meal >= info->time_to_die)
+	philos = info->philos;
+	i = -1;
+	while (++i < info->num_of_philos)
 	{
-		philo_print("died", philo);
-		pthread_mutex_lock(&(info->died_mutex));
-		info->died = TRUE;
-		pthread_mutex_unlock(&(info->died_mutex));
-		return (TRUE);
+		pthread_mutex_lock(&(philos[i].last_mutex));
+		if (gettime() - philos[i].last_meal >= info->time_to_die)
+		{
+			pthread_mutex_unlock(&(philos[i].last_mutex));
+			pthread_mutex_lock(&(info->died_mutex));
+			info->died = TRUE;
+			pthread_mutex_unlock(&(info->died_mutex));
+			pthread_mutex_lock(&(info->print_mutex));
+			printf("%ld %d died\n", gettime() - info->launch_time,
+				philos[i].id);
+			pthread_mutex_unlock(&(info->print_mutex));
+			return (TRUE);
+		}
+		pthread_mutex_unlock(&(philos[i].last_mutex));
 	}
 	return (FALSE);
 }
