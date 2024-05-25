@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:42:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 10:14:40 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/25 22:57:24 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@
 # define FAIL 1
 # define TRUE 1
 # define FALSE 0
-# define DIED_BY_TIME 2
-# define FINISHED_MEALS 3
-# define FAIL_PTH 4
+# define FINISHED 0
 
 typedef struct s_philo
 {
@@ -46,9 +44,7 @@ typedef struct s_philo
 	pthread_t	monitor;
 	sem_t		*forks_sem;
 	sem_t		*print_sem;
-	sem_t		*count_sem;
 	sem_t		*last_sem;
-	sem_t		*die_sem;
 }	t_philo;
 
 int		init_info(t_philo **philo, char **argv);
@@ -57,11 +53,12 @@ int		init_sem(t_philo **philo);
 
 int		create_processes(t_philo *philo);
 void	create_thread(t_philo *philo);
+void	wait_child(t_philo *philo);
 
 void	child_behave(t_philo *philo);
 
+void	philo_sleep(long sleep_time);
 void	philo_print(char *s, t_philo *philo);
-int		check_eat_enough(t_philo *philo);
 
 int		valid_argv(int argc, char **argv);
 

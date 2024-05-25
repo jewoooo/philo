@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 22:40:58 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 10:15:42 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/25 23:22:39 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,24 @@
 
 void	wait_child(t_philo *philo)
 {
-	int	i;
-	int	cnt;
-	int	status;
+	int		i;
+	int		j;
+	int		status;
+	pid_t	term_pid;
 
-	cnt = 0;
-	while (TRUE)
+	i = -1;
+	while (++i < philo->num_of_philos)
 	{
-		waitpid(-1, &status, 0);
-		if (WEXITSTATUS(status) == DIED_BY_TIME
-			|| WEXITSTATUS(status) == FAIL_PTH)
+		term_pid = waitpid(-1, &status, 0);
+		if (term_pid > 0 && WIFEXITED(status) != 0
+			&& WEXITSTATUS(status) != FINISHED)
 		{
-			i = -1;
-			while (++i < philo->num_of_philos)
-				kill(philo->pid[i], SIGKILL);
-			break ;
-		}
-		if (WEXITSTATUS(status) == FINISHED_MEALS)
-		{
-			cnt++;
-			if (cnt == philo->num_of_philos)
-				break ;
+			j = -1;
+			while (++j < philo->num_of_philos)
+				kill(philo->pid[j], SIGKILL);
+			printf("%ld %d died\n", gettime() - philo->launch_time,
+				WEXITSTATUS(status));
+			return ;
 		}
 	}
 }
@@ -44,6 +41,7 @@ int	create_processes(t_philo *philo)
 	int	i;
 	int	j;
 
+	philo->last_eat_time = gettime();
 	i = -1;
 	while (++i < philo->num_of_philos)
 	{
@@ -62,6 +60,5 @@ int	create_processes(t_philo *philo)
 			child_behave(philo);
 		}
 	}
-	wait_child(philo);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:56:31 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 02:01:14 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/25 22:28:43 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,9 @@ int	init_sem(t_philo **philo)
 			0644, (*philo)->num_of_philos);
 	if ((*philo)->forks_sem == SEM_FAILED)
 		return (er_unlink_free(philo));
-	sem_unlink("/die_sem");
-	(*philo)->die_sem = sem_open("/die_sem", O_CREAT, 0644, 1);
-	if ((*philo)->die_sem == SEM_FAILED)
-		return (er_unlink_free(philo));
 	sem_unlink("/print_sem");
 	(*philo)->print_sem = sem_open("/print_sem", O_CREAT, 0644, 1);
 	if ((*philo)->print_sem == SEM_FAILED)
-		return (er_unlink_free(philo));
-	sem_unlink("/count_sem");
-	(*philo)->count_sem = sem_open("/count_sem", O_CREAT, 0644, 1);
-	if ((*philo)->count_sem == SEM_FAILED)
 		return (er_unlink_free(philo));
 	sem_unlink("/last_sem");
 	(*philo)->last_sem = sem_open("/last_sem", O_CREAT, 0644, 1);
@@ -72,9 +64,7 @@ int	init_info(t_philo **philo, char **argv)
 	else
 		(*philo)->must_eat = (-1);
 	(*philo)->launch_time = gettime();
-	(*philo)->last_eat_time = gettime();
-	if ((*philo)->launch_time == FAIL
-		|| (*philo)->last_eat_time == FAIL)
+	if ((*philo)->launch_time == FAIL)
 		return (er_free_philo(philo));
 	return (SUCCESS);
 }

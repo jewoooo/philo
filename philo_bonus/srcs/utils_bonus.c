@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:49:12 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/13 01:42:00 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/25 22:28:34 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,25 @@ int	ft_atoi(char *s)
 		s++;
 	}
 	return ((int)res);
+}
+
+int	valid_argv(int argc, char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (++i < argc)
+	{
+		j = 0;
+		while (argv[i][j] != '\0')
+		{
+			if (argv[i][j] < '0' || argv[i][j] > '9')
+				return (FAIL);
+			j++;
+		}
+	}
+	return (SUCCESS);
 }
 
 long	gettime(void)
