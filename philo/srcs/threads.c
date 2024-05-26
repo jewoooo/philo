@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 13:40:15 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/24 20:31:30 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/26 12:41:48 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	*philo_routine(void *args)
 	t_philo	*philo;
 
 	philo = (t_philo *)args;
+	while (check_started(philo->info) != TRUE)
+		usleep(500);
 	reset_last_meal(philo);
 	if (philo->id % 2 == 0)
 		usleep(philo->info->time_to_eat * 1000);
@@ -62,6 +64,9 @@ int	create_thread(t_info **info, t_philo **philos)
 			&philo_routine, &((*philos)[i])) != 0)
 			return (er_free_all(info, philos, &((*info)->forks)));
 	}
+	pthread_mutex_lock(&((*info)->started_mutex));
+	(*info)->started = TRUE;
+	pthread_mutex_unlock(&((*info)->started_mutex));
 	if (pthread_create(&((*info)->monitor), NULL, &monitoring, *info) != 0)
 		return (er_free_all(info, philos, &((*info)->forks)));
 	return (SUCCESS);

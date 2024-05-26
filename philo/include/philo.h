@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:18:25 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/24 20:31:04 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/26 12:41:41 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ typedef struct s_info
 	long			time_to_sleep;
 	int				must_eat;
 	int				died;
+	int				started;
 	int				finished;
 	long			launch_time;
 	t_fork			*forks;
 	t_philo			*philos;
 	pthread_t		monitor;
+	pthread_mutex_t	started_mutex;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	died_mutex;
 	pthread_mutex_t	finished_mutex;
@@ -89,6 +91,7 @@ void	reset_last_meal(t_philo *philo);
 void	philo_print(char *s, t_philo *philo);
 void	philo_sleep(long sleep_time, t_info *info);
 
+int		check_started(t_info *info);
 int		check_died(t_info *info);
 int		check_died_flag(t_info *info);
 int		check_all_finished(t_info *info);
