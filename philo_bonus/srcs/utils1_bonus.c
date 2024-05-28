@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*   utils1_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:49:12 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/25 22:28:34 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/28 23:12:44 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo_bonus.h"
+
+int	check_died(t_philo *philo)
+{
+	if (gettime() - philo->last_eat_time >= philo->time_to_die)
+		return (TRUE);
+	return (FALSE);
+}
 
 long	ft_atol(char *s)
 {

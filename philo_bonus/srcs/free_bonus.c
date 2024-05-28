@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 23:21:34 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/28 13:23:26 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/28 23:50:32 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	unlink_free(t_philo **philo)
 {
+	sem_close((*philo)->forks_sem);
+	sem_close((*philo)->print_sem);
 	sem_unlink("/forks_sem");
 	sem_unlink("/print_sem");
 	free((*philo)->pid);

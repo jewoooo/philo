@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:56:31 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/28 13:33:49 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/28 23:37:40 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ void	init_last_sem(t_philo *philo)
 {
 	philo->s_id = ft_itoa(philo->id);
 	sem_unlink(philo->s_id);
-	philo->last_sem = sem_open(philo->s_id, O_CREAT, 0644, 1);
+	philo->last_sem = sem_open(philo->s_id, O_CREAT,
+			0644, 1);
 	if (philo->last_sem == SEM_FAILED)
-	{
-		printf("philo %d: sem_open() failed.\n", philo->id);
 		exit(philo->id);
-	}
 }
 
 int	init_sem(t_philo **philo)
@@ -72,7 +70,5 @@ int	init_info(t_philo **philo, char **argv)
 	else
 		(*philo)->must_eat = (-1);
 	(*philo)->launch_time = gettime();
-	if ((*philo)->launch_time == FAIL)
-		return (er_free_philo(philo));
 	return (SUCCESS);
 }

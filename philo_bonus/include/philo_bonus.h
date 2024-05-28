@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:42:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/28 13:29:56 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/28 23:40:47 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	philo_print(char *s, t_philo *philo);
 
 int		valid_argv(int argc, char **argv);
 
+int		check_died(t_philo *philo);
 char	*ft_itoa(long n);
 int		ft_atoi(char *s);
 long	ft_atol(char *s);
