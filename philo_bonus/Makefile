@@ -6,7 +6,7 @@
 #    By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/12 11:48:05 by jewlee            #+#    #+#              #
-#    Updated: 2024/05/25 22:28:20 by jewlee           ###   ########.fr        #
+#    Updated: 2024/05/28 13:21:39 by jewlee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRCS = ./srcs/main_bonus.c \
 	./srcs/behave_bonus.c \
 	./srcs/behave_utils_bonus.c \
 	./srcs/error_bonus.c \
-	./srcs/utils_bonus.c \
+	./srcs/utils1_bonus.c \
+	./srcs/utils2_bonus.c \
 	./srcs/thread_bonus.c \
 	./srcs/processes_bonus.c \
 	./srcs/free_bonus.c

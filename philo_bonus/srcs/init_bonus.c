@@ -6,11 +6,23 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:56:31 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/25 22:28:43 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/28 13:33:49 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo_bonus.h"
+
+void	init_last_sem(t_philo *philo)
+{
+	philo->s_id = ft_itoa(philo->id);
+	sem_unlink(philo->s_id);
+	philo->last_sem = sem_open(philo->s_id, O_CREAT, 0644, 1);
+	if (philo->last_sem == SEM_FAILED)
+	{
+		printf("philo %d: sem_open() failed.\n", philo->id);
+		exit(philo->id);
+	}
+}
 
 int	init_sem(t_philo **philo)
 {
@@ -22,10 +34,6 @@ int	init_sem(t_philo **philo)
 	sem_unlink("/print_sem");
 	(*philo)->print_sem = sem_open("/print_sem", O_CREAT, 0644, 1);
 	if ((*philo)->print_sem == SEM_FAILED)
-		return (er_unlink_free(philo));
-	sem_unlink("/last_sem");
-	(*philo)->last_sem = sem_open("/last_sem", O_CREAT, 0644, 1);
-	if ((*philo)->last_sem == SEM_FAILED)
 		return (er_unlink_free(philo));
 	return (SUCCESS);
 }

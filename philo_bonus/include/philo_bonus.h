@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:42:09 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/25 22:57:24 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/28 13:29:56 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 typedef struct s_philo
 {
 	int			id;
+	char		*s_id;
 	int			num_of_philos;
 	long		time_to_die;
 	long		time_to_eat;
@@ -50,6 +51,7 @@ typedef struct s_philo
 int		init_info(t_philo **philo, char **argv);
 int		init_philo(t_philo **philo);
 int		init_sem(t_philo **philo);
+void	init_last_sem(t_philo *philo);
 
 int		create_processes(t_philo *philo);
 void	create_thread(t_philo *philo);
@@ -62,6 +64,7 @@ void	philo_print(char *s, t_philo *philo);
 
 int		valid_argv(int argc, char **argv);
 
+char	*ft_itoa(long n);
 int		ft_atoi(char *s);
 long	ft_atol(char *s);
 long	gettime(void);

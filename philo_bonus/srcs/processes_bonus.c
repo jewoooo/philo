@@ -6,11 +6,16 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 22:40:58 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/25 23:22:39 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/05/28 16:36:46 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo_bonus.h"
+
+void	handle_sigterm(int signum)
+{
+	exit(FAIL);
+}
 
 void	wait_child(t_philo *philo)
 {
@@ -28,7 +33,7 @@ void	wait_child(t_philo *philo)
 		{
 			j = -1;
 			while (++j < philo->num_of_philos)
-				kill(philo->pid[j], SIGKILL);
+				kill(philo->pid[j], SIGTERM);
 			printf("%ld %d died\n", gettime() - philo->launch_time,
 				WEXITSTATUS(status));
 			return ;
@@ -50,12 +55,14 @@ int	create_processes(t_philo *philo)
 		{
 			j = -1;
 			while (++j < i)
-				kill(philo->pid[j], SIGKILL);
+				kill(philo->pid[j], SIGTERM);
 			return (FAIL);
 		}
 		if (philo->pid[i] == 0)
 		{
+			signal(SIGTERM, handle_sigterm);
 			philo->id = i + 1;
+			init_last_sem(philo);
 			create_thread(philo);
 			child_behave(philo);
 		}
