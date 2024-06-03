@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:48:38 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/28 23:52:05 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/03 23:14:40 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ void	*monitoring(void *args)
 		{
 			sem_post(philo->last_sem);
 			sem_close(philo->last_sem);
-			sem_unlink(philo->s_id);
 			free(philo->s_id);
+			sem_wait(philo->print_sem);
+			printf("%ld %d died\n", gettime() - philo->launch_time,
+				philo->id);
 			exit(philo->id);
 		}
 		sem_post(philo->last_sem);

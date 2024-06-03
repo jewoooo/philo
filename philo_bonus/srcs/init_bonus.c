@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:56:31 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/28 23:37:40 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/03 23:07:18 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	init_last_sem(t_philo *philo)
 {
 	philo->s_id = ft_itoa(philo->id);
+	if (philo->s_id == NULL)
+		exit(philo->id);
 	sem_unlink(philo->s_id);
 	philo->last_sem = sem_open(philo->s_id, O_CREAT,
 			0644, 1);
