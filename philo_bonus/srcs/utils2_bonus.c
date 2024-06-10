@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:21:44 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/28 23:31:53 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:07:41 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,8 @@ static char	*put_int(char *ptr, long long num)
 	long long	div;
 
 	i = 0;
-	if (num < 0)
-	{
-		ptr[i++] = '-';
-		num *= (-1);
-	}
+	ptr[i] = '/';
+	i++;
 	div = 1;
 	while (num / div)
 		div *= 10;
@@ -61,8 +58,8 @@ char	*ft_itoa(long n)
 	long long		num;
 
 	n_str = (char *)malloc(sizeof(char) * (int_len(n) + 2));
-	if (n_str == 0)
-		return (0);
+	if (n_str == NULL)
+		return (NULL);
 	i = 0;
 	num = (long long)n;
 	if (num == 0)
@@ -71,8 +68,6 @@ char	*ft_itoa(long n)
 		n_str[i + 1] = '\0';
 		return (n_str);
 	}
-	n_str[0] = '/';
-	n_str++;
 	n_str = put_int(n_str, num);
 	return (n_str);
 }

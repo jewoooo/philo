@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 13:40:15 by jewlee            #+#    #+#             */
-/*   Updated: 2024/05/26 12:41:48 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:08:13 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*philo_routine(void *args)
 		usleep(500);
 	reset_last_meal(philo);
 	if (philo->id % 2 == 0)
-		usleep(philo->info->time_to_eat * 1000);
+		usleep(philo->info->time_to_eat / 2 * 1000);
 	while (TRUE)
 	{
 		if (check_died_flag(philo->info) == TRUE

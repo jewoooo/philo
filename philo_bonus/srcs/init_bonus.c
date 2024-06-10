@@ -6,7 +6,7 @@
 /*   By: jewlee <jewlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 21:56:31 by jewlee            #+#    #+#             */
-/*   Updated: 2024/06/03 23:07:18 by jewlee           ###   ########.fr       */
+/*   Updated: 2024/06/10 13:53:54 by jewlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	init_last_sem(t_philo *philo)
 	sem_unlink(philo->s_id);
 	philo->last_sem = sem_open(philo->s_id, O_CREAT,
 			0644, 1);
-	if (philo->last_sem == SEM_FAILED)
-		exit(philo->id);
 }
 
 int	init_sem(t_philo **philo)
@@ -29,12 +27,8 @@ int	init_sem(t_philo **philo)
 	sem_unlink("/forks_sem");
 	(*philo)->forks_sem = sem_open("/forks_sem", O_CREAT,
 			0644, (*philo)->num_of_philos);
-	if ((*philo)->forks_sem == SEM_FAILED)
-		return (er_unlink_free(philo));
 	sem_unlink("/print_sem");
 	(*philo)->print_sem = sem_open("/print_sem", O_CREAT, 0644, 1);
-	if ((*philo)->print_sem == SEM_FAILED)
-		return (er_unlink_free(philo));
 	return (SUCCESS);
 }
 
